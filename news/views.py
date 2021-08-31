@@ -8,7 +8,7 @@ import datetime as dt
 def welcome(request):
     return render(request,'welcome.html')
 
-def news_of_day(request):
+def news_today(request):
     date = dt.date.today()
     return render(request, 'all-news/today_news.html', {"date": date,})
 
@@ -47,7 +47,7 @@ def past_days_news(request,past_date):
         assert False
 
     if date == dt.date.today():
-        return redirect(news_of_day)
+        return redirect(news_today)
 
     return render(request, 'all-news/past_news.html',{"date": date})        
             
