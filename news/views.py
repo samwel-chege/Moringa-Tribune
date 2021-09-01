@@ -35,12 +35,15 @@ def past_days_news(request,past_date):
     return render(request, 'all-news/past_news.html',{"date": date,"news":news})        
             
 
-    # day  = convert_dates(date)
-    # html = f'''
-    #     <html>
-    #         <body>
-    #             <h1> News for {day} {date.day}-{date.month}-{date.year}</h1>
-    #         </body>
-    #     </html>        
-    #          '''
-    # return HttpResponse(html)         
+def search_results(request):
+
+    if 'article' in request.GET and request.GET["article"]:
+        search_term = request.GET.get("article")
+        searched_articles = Article.search_by_title(search_term)
+        message  = f"{search_term}" 
+
+        return render(request, 'all-news/search.html',{"message":message,"articles":searched_articles})  
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'all-news/search.html',{"message":message})     
